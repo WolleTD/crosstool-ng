@@ -10,7 +10,7 @@ CT_DoKernelTupleValues()
         # should be added here when someone starts to care about them.
         case "${CT_ARCH}" in
             arm*|microblaze*)   CT_TARGET_KERNEL="linux" ;;
-            c6x|m68k|xtensa*)   CT_TARGET_KERNEL="uclinux" ;;
+            c6x|m68k|bfin|xtensa*)   CT_TARGET_KERNEL="uclinux" ;;
             *)                  CT_Abort "Unsupported no-mmu arch '${CT_ARCH}'"
         esac
     fi
@@ -58,6 +58,8 @@ do_kernel_headers()
     case "${CT_ARCH}:${CT_ARCH_BITNESS}" in
         # ARM 64 (aka AArch64) is special
         arm:64) kernel_arch="arm64";;
+        # Blackfin differs in kernel and gcc
+        bfin:32) kernel_arch="blackfin";;
     esac
 
     CT_DoLog EXTRA "Installing kernel headers"
